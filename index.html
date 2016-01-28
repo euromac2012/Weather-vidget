@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+     <div class="prompt-form">
+         <input type="text" placeholder = 'Enter your location'>
+         <button type="Submit" class = 'btn'>Submit</button>
+     </div>
+     <div class="error-message">Your location not found</div>
+     <div id="tabs-container">
+         <ul class="tabs-menu">
+             <li class="current" data-tab="tab-1">
+                 <div>Kiev,UA</div>
+                 <img src="image/x.jpg"/>
+             </li>
+             <li data-tab="tab-2">
+             <div class="city">NewYork,NY</div>
+             <img src="image/x.jpg"/>
+             </li>
+         </ul>
+         <div class="tab">
+             <div id="tab-1" class="tab-content current">
+             </div>
+             <div id="tab-2" class="tab-content">
+             </div>
+          </div>
+     </div>
+     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

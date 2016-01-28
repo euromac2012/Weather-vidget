@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Widget by Harish</title>
+    <!-- For-Mobile-Apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+        addEventListener("load",
+                function() {
+                    setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){
+            window.scrollTo(0,1);
+        }
+    </script>
+    <!-- //For-Mobile-Apps -->
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style -->
+    <!-- JavaScript -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <!-- Javascript -->
+
+    <script>
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML =
+                    h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+    </script>
+
+
+
+</head>
+<body onload="startTime()">
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('customersCtrl', function($scope, $http) {
+        $http.get("http://api.worldweatheronline.com/free/v2/weather.ashx?q=Chennai&format=json&num_of_days=5") // you need to add your own key
+                .success(function(response) {
+                    $scope.todaysWeatherReport = response.data.current_condition;
+                    $scope.forcastedWeatherReport = response.data.weather;
+                    $scope.currentWeatherInTempC = $scope.todaysWeatherReport[0].temp_C;
+
+                    $scope.oneWeatherInTempC_max = $scope.forcastedWeatherReport[1].maxtempC;
+                    $scope.oneWeatherInTempC_min = $scope.forcastedWeatherReport[1].mintempC;
+
+                    $scope.twoWeatherInTempC_max = $scope.forcastedWeatherReport[2].maxtempC;
+                    $scope.twoWeatherInTempC_min = $scope.forcastedWeatherReport[2].mintempC;
+
+                    $scope.threeWeatherInTempC_max = $scope.forcastedWeatherReport[3].maxtempC;
+                    $scope.threeWeatherInTempC_min = $scope.forcastedWeatherReport[3].mintempC;
+
+                    var d = new Date();
+                    var weekday = new Array(7);
+                    weekday[0]=  "Sun";
+                    weekday[1] = "Mon";
+                    weekday[2] = "Tue";
+                    weekday[3] = "Wed";
+                    weekday[4] = "Thr";
+                    weekday[5] = "Fri";
+                    weekday[6] = "Sat";
+
+                    alert(d.getDay());
+
+                    var dateInt1, dateInt2, dateInt3;
+                    if(d.getDay() == 4){
+                        dateInt1=5;
+                        dateInt2=6;
+                        dateInt3=0;
+                    }
+                    if(d.getDay() == 5){
+                        dateInt1=6;
+                        dateInt2=0;
+                        dateInt3=1;
+                    }
+                    if(d.getDay() == 6){
+                        dateInt1=0;
+                        dateInt2=1;
+                        dateInt3=2;
+                    }
+                    alert(d.getDay());
+                    $scope.oneday = weekday[dateInt1];
+                    $scope.twoday = weekday[dateInt2];
+                    $scope.threeday = weekday[dateInt3];
+                }
+        );
+    });
+</script>
+
+<h1>Weather Widget</h1>
+<h3>-- Created using AngularJS --</h3>
+
+<div class="content">
+
+    <div class="place">
+
+        <div id="txt"></div>
+
+        <div class="dmy">
+            <script type="text/javascript">
+                var mydate=new Date()
+                var year=mydate.getYear()
+                if(year<1000)
+                    year+=1900
+                var day=mydate.getDay()
+                var month=mydate.getMonth()
+                var daym=mydate.getDate()
+                if(daym<10)
+                    daym="0"+daym
+                var dayarray=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
+                var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+                document.write(""+dayarray[day]+", "+montharray[month]+" "+daym+", "+year+"")
+            </script>
+        </div>
+
+        <div class="city">
+            <p>Chennai, India</p>
+        </div>
+
+    </div>
+
+    <div class="temp">
+
+        <div id="dd1" class="wrapper-dropdown-3" tabindex="1">
+
+			<span>
+			<img src="images/nav.png" alt=""/>
+			</span>
+
+            <ul class="dropdown">
+
+                <li><a href="#">TODAY</a></li>
+                <li><a href="#">FORECAST</a></li>
+                <li><a href="#">CITIES</a></li>
+                <li><a href="#">NATIONAL</a></li>
+                <li><a href="#">WORLD</a></li>
+                <li><a href="#">SETTINGS</a></li>
+
+            </ul>
+
+            <script type="text/javascript">
+                function DropDown(el) {
+                    this.dd = el;
+                    this.initEvents();
+                }
+                DropDown.prototype = {
+                    initEvents : function() {
+                        var obj = this;
+
+                        obj.dd.on('click', function(event){
+                            $(this).toggleClass('active');
+                            event.stopPropagation();
+                        });
+                    }
+                }
+                $(function() {
+                    var dd = new DropDown( $('#dd1') );
+                    $(document).click(function() {
+                        // all dropdowns
+                        $('.wrapper-dropdown-3').removeClass('active');
+                    });
+                });
+            </script>
+
+        </div>
+
+
+        <div data-ng-app="myApp" ng-controller="customersCtrl"><!-- ng-app defines angularJS app-->
+
+            <p data-ng-bind="currentWeatherInTempC + ' °C'"></p>
+
+            <div class="day">
+
+                <div class="sat">
+                    <h3>{{oneday}}</h3>
+                    <p data-ng-bind="oneWeatherInTempC_min +' °C↓ ' + oneWeatherInTempC_max +' °C↑'"/>
+                </div>
+
+                <div class="sund">
+                    <h3>{{twoday}}</h3>
+                    <p data-ng-bind="twoWeatherInTempC_min +' °C↓ '+twoWeatherInTempC_max+' °C↑'"/>
+                </div>
+
+                <div class="mon">
+                    <h3>{{threeday}}</h3>
+                    <p data-ng-bind="threeWeatherInTempC_min +' °C↓ '+threeWeatherInTempC_max+' °C↑'"/>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="clear"></div>
+
+</div>
+
+<div class="footer">
+    <p>Created by Harish Aravind</p>
+    <p>Powered by <a href="http://www.worldweatheronline.com/" title="Free Weather API" target="_blank">World Weather Online</a></p>
+</div>
+</body>
+</html>

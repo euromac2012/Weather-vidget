@@ -1,0 +1,64 @@
+body {
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    font-size: 20px;
+}
+#tabs-container{
+     width: 800px;
+     margin: 0px;
+ }
+.tabs-menu {
+    margin-bottom: 0px;
+    padding: 0px;
+
+}
+.tabs-menu li {
+    position: relative;
+    background: #ededed;
+    color:#2e7da3;
+    border: 2px solid white;
+    display: inline-block;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+img {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    float: right;
+    cursor: pointer;
+    width:10px ;
+    height:10px;
+}
+
+
+.tabs-menu li.current {
+    background:none;
+}
+.tab-content {
+    padding: 15px;
+    display: none;
+    background: none;
+}
+
+.tab-content.current{
+    display: inherit;
+}
+.error-message {
+    display: none;
+}
+
+.cloud img {
+    position:relative;
+    left: 0px;
+    top: 0px;
+    float: left;
+    width:200px ;
+    height:200px;
+}
+ .temp {
+     position:relative;
+     left: 20px;
+     top: 50px;
+ }
